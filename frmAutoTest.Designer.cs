@@ -1,6 +1,6 @@
 ﻿namespace pryRodriguezSP3A
 {
-    partial class Form1
+    partial class frmAutoTest
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -93,20 +93,20 @@
             // 
             // txtTitular
             // 
-            this.txtTitular.Enabled = false;
             this.txtTitular.Location = new System.Drawing.Point(104, 142);
             this.txtTitular.Name = "txtTitular";
             this.txtTitular.Size = new System.Drawing.Size(267, 20);
             this.txtTitular.TabIndex = 6;
+            this.txtTitular.TextChanged += new System.EventHandler(this.txtTitular_TextChanged);
             // 
             // txtDominio
             // 
-            this.txtDominio.Enabled = false;
             this.txtDominio.Location = new System.Drawing.Point(104, 64);
             this.txtDominio.Name = "txtDominio";
             this.txtDominio.Size = new System.Drawing.Size(100, 20);
             this.txtDominio.TabIndex = 5;
             this.txtDominio.TextChanged += new System.EventHandler(this.txtDominio_TextChanged);
+            this.txtDominio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDominio_KeyPress);
             // 
             // txtNumero
             // 
@@ -115,6 +115,7 @@
             this.txtNumero.Size = new System.Drawing.Size(100, 20);
             this.txtNumero.TabIndex = 4;
             this.txtNumero.TextChanged += new System.EventHandler(this.txtNumero_TextChanged);
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
             // 
             // lblTitular
             // 
@@ -171,6 +172,7 @@
             this.btnSalir.TabIndex = 2;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnConsultar
             // 
@@ -190,7 +192,6 @@
             this.mcrEstaditicas.Controls.Add(this.lblDominio_Seis_Meses);
             this.mcrEstaditicas.Controls.Add(this.lblAntiguedad);
             this.mcrEstaditicas.Controls.Add(this.lblCantidad);
-            this.mcrEstaditicas.Enabled = false;
             this.mcrEstaditicas.Location = new System.Drawing.Point(13, 272);
             this.mcrEstaditicas.Name = "mcrEstaditicas";
             this.mcrEstaditicas.Size = new System.Drawing.Size(417, 143);
@@ -246,7 +247,7 @@
             this.lblCantidad.TabIndex = 5;
             this.lblCantidad.Text = "Cantidad de turnos";
             // 
-            // Form1
+            // frmAutoTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -256,7 +257,7 @@
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.mcrRegistro);
-            this.Name = "Form1";
+            this.Name = "frmAutoTest";
             this.Text = "Auto Test";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mcrRegistro.ResumeLayout(false);

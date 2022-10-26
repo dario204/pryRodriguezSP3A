@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace pryRodriguezSP3A
 {
-    public partial class Form1 : Form
+    public partial class frmAutoTest : Form
     {
         //Declaracion de variables globales
         int numeroTurno;
         string Dominio;
         int añoFabricacion;
         string titular;
-        public Form1()
+        public frmAutoTest()
         {
             InitializeComponent();
         }
@@ -58,9 +58,39 @@ namespace pryRodriguezSP3A
 
         private void txtNumero_TextChanged(object sender, EventArgs e)
         {
-            if (txtNumero.Text!="")
+        }
+
+        private void txtTitular_TextChanged(object sender, EventArgs e)
+        {
+            if (txtNumero.Text!="" && txtDominio.Text!=""&&txtTitular.Text!="")
             {
-                txtDominio.Text ="";
+                btnRegistrar.Enabled = true;
+            }
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {   //si NO es un digito y NO es un blackspace (para borrar)
+            if ((!Char.IsDigit(e.KeyChar)) && (e.KeyChar!=(char)Keys.Back)
+            {
+                e.Handled = true;//borra la tecla ingresada
+            }
+        }
+
+        private void txtDominio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLower(e.KeyChar)) //es una minuscula?
+            {
+                e.KeyChar = Char.ToUpper(e.KeyChar);//convertir a mayuscula
+            }
+            //no es ni letra ni numero y es distinto de blackspace?
+            if (!Char.IsLetterOrDigit(e.KeyChar)&& e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
             }
         }
     }
