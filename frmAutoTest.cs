@@ -13,10 +13,16 @@ namespace pryRodriguezSP3A
     public partial class frmAutoTest : Form
     {
         //Declaracion de variables globales
-        int numeroTurno;
-        string Dominio;
-        int añoFabricacion;
-        string titular;
+        public struct Turno
+        {
+            int numeroTurno;
+            string Dominio;
+            int añoFabricacion;
+            string titular;
+        }
+        const int Max = 50;
+        public Turno[] turnos;
+        public int cantidad = 0;
         public frmAutoTest()
         {
             InitializeComponent();
@@ -24,7 +30,41 @@ namespace pryRodriguezSP3A
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            turnos = new Turno[Max];
+            cantidad = 0;
+            
+        }
+        private bool validarDatos()
+        {
+            bool resultado = false; // valor a devolver si no se cumplen todas las condiciones
+                                    // validar la existencia de los datos a ingresar
+            if (txtNumero.Text != "" && txtDominio.Text != "" && txtTitular.Text != "")
+            {
+                if (txtDominio.Text.Length >= 6) // validar el contenido del Dominio
+                {
+                    // validar que NO exista el número de turno a cargar
+                    if (!Turnos(int.Parse(txtNumero.Text)))
+                    {
+                        resultado = true; // si todo está bien devuelve verdadero
+                    }
+                    else
+                    {
+                        MessageBox.Show("El Número de Turno ingresado ya existe",
+                        "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("El Dominio debe tener 6 o 7 caracteres",
+                    "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe completar los datos faltantes", "ERROR",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return resultado;
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
