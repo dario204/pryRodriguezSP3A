@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,17 +13,19 @@ namespace pryRodriguezSP3A
 {
     public partial class frmAutoTest : Form
     {
-        //Declaracion de variables globales
+        
         public struct Turno
         {
-            int numeroTurno;
-            string Dominio;
-            int añoFabricacion;
-            string titular;
+           
+            public int numeroTurno;
+           public string Dominio;
+            public int añoFabricacion;
+           public string titular;
         }
         const int Max = 50;
         public Turno[] turnos;
         public int cantidad = 0;
+        public string Turnos;
         public frmAutoTest()
         {
             InitializeComponent();
@@ -32,20 +35,21 @@ namespace pryRodriguezSP3A
         {
             turnos = new Turno[Max];
             cantidad = 0;
-            
+            LimpiarInterfaz();
+
         }
         private bool validarDatos()
         {
-            bool resultado = false; // valor a devolver si no se cumplen todas las condiciones
-                                    // validar la existencia de los datos a ingresar
+            bool resultado = false; 
+                                  
             if (txtNumero.Text != "" && txtDominio.Text != "" && txtTitular.Text != "")
             {
-                if (txtDominio.Text.Length >= 6) // validar el contenido del Dominio
+                if (txtDominio.Text.Length >= 6) 
                 {
-                    // validar que NO exista el número de turno a cargar
-                    if (!Turnos(int.Parse(txtNumero.Text)))
+                    
+                    if (!buscarTurno(int.Parse(txtNumero.Text)))
                     {
-                        resultado = true; // si todo está bien devuelve verdadero
+                        resultado = true; 
                     }
                     else
                     {
@@ -67,14 +71,39 @@ namespace pryRodriguezSP3A
             return resultado;
         }
 
+        private bool buscarTurno(int numero)
+        {
+            bool existe = false; 
+            int posicion = 0;
+                         
+            while (posicion < cantidad)
+            {
+                
+                if (numero == turnos[posicion].numeroTurno)
+                {
+                    existe = true;
+                    break; 
+                }
+                posicion++; 
+            }
+            return existe; 
+        }
+
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            numeroTurno = int.Parse(txtNumero.Text);
-            Dominio = txtDominio.Text;
-            añoFabricacion = Convert.ToInt32(numFabricacion.Value);
-            titular = txtTitular.Text;
-
-            MessageBox.Show("Registro realizado", "registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (validarDatos())
+            {
+                turnos[cantidad].numeroTurno = int.Parse(txtNumero.Text);
+                turnos[cantidad].Dominio = txtDominio.Text;
+                turnos[cantidad].añoFabricacion= int.Parse(numFabricacion.Value.ToString());
+                turnos[cantidad].titular = txtTitular.Text;
+                cantidad++;
+            }
+            if (cantidad==Max)
+            {
+                MessageBox.Show("Se completó la capacidad de carga de datos","" ,MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnRegistrar.Enabled = false;
+            }
 
             LimpiarInterfaz();
         }
@@ -88,7 +117,26 @@ namespace pryRodriguezSP3A
 
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-
+            txtCantidadTurnos.Text = cantidad.ToString();
+            int menor= int.MaxValue;
+            int posicion;
+            for ( posicion = 0; posicion < cantidad; posicion++)
+            {
+                if (turnos[posicion].añoFabricacion < menor)
+                {
+                    menor = turnos[posicion].añoFabricacion;
+                }
+            }
+            txtAntiguedad.Text = menor.ToString();
+            int contador = 0;
+            for (posicion = 0; posicion < cantidad ; posicion++)
+            {
+                if (turnos[posicion].Dominio.Length== 6)
+                {
+                    contador++;
+                }
+            }
+            txtDominioSeisMeses.Text = contador.ToString();
         }
 
         private void txtDominio_TextChanged(object sender, EventArgs e)
@@ -114,20 +162,20 @@ namespace pryRodriguezSP3A
         }
 
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
-        {   //si NO es un digito y NO es un blackspace (para borrar)
-            if ((!Char.IsDigit(e.KeyChar)) && (e.KeyChar!=(char)Keys.Back)
+        {   
+            if ((!Char.IsDigit(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
             {
-                e.Handled = true;//borra la tecla ingresada
+                e.Handled = true;
             }
         }
 
         private void txtDominio_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Char.IsLower(e.KeyChar)) //es una minuscula?
+            if (Char.IsLower(e.KeyChar)) 
             {
-                e.KeyChar = Char.ToUpper(e.KeyChar);//convertir a mayuscula
+                e.KeyChar = Char.ToUpper(e.KeyChar);
             }
-            //no es ni letra ni numero y es distinto de blackspace?
+            
             if (!Char.IsLetterOrDigit(e.KeyChar)&& e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
