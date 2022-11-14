@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAutoTest));
             this.mcrRegistro = new System.Windows.Forms.GroupBox();
             this.numFabricacion = new System.Windows.Forms.NumericUpDown();
             this.txtTitular = new System.Windows.Forms.TextBox();
@@ -177,7 +178,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(641, 160);
+            this.btnSalir.Location = new System.Drawing.Point(641, 148);
             this.btnSalir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(127, 42);
@@ -188,7 +189,7 @@
             // 
             // btnConsultar
             // 
-            this.btnConsultar.Location = new System.Drawing.Point(641, 292);
+            this.btnConsultar.Location = new System.Drawing.Point(641, 305);
             this.btnConsultar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConsultar.Name = "btnConsultar";
             this.btnConsultar.Size = new System.Drawing.Size(127, 41);
@@ -278,6 +279,7 @@
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.mcrRegistro);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmAutoTest";
             this.Text = "Auto Test";
